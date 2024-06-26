@@ -1,0 +1,9 @@
+table.tablethingy {
+    border:1px solid black;
+    border-collapse: collapse;
+}
+
+table.tablethingy td {
+    border:1px solid black;
+
+}

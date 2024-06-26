@@ -1,0 +1,90 @@
+
+<html>
+    <script type="text/javascript">
+    
+    const url = "http://localhost:3001/"
+
+function assert(s){
+    if(!s){
+        throw "assertion failed";
+    }
+}
+
+async function run(){
+    console.log("abc");
+
+    // first ,clear everything 
+    await fetch(url + "clear", {"method":"POST"}); 
+    // add some data
+    for(let i=0; i < 10; i++){
+        let x = {"name": "Post name " + i, "content" : "Post content " + i , "user": "Post user" + i }; 
+        await fetch(url + "add", {method:"POST",headers:{"Content-Type":"application/json"} ,body:JSON.stringify(x)})
+    }
+    // try to add a duplicate
+    i = 0 ; 
+    let x = {"name": "Post name " + i, "content" : "Post content " + i , "user": "Post user" + i }; 
+    let text = await fetch(url + "add", {method:"POST",headers:{"Content-Type":"application/json"} ,body:JSON.stringify(x)}).then((x) => x.text())
+    assert(text.indexOf("Duplicate") != -1);
+
+
+    // try to add (missing stuff) 
+    i = 0 ; 
+    let x2 = {"name": "Post name " + i , "user": "Post user" + i }; 
+    let text2 = await fetch(url + "add", {method:"POST",headers:{"Content-Type":"application/json"} ,body:JSON.stringify(x2)}).then((x) => x.text())
+    assert(text2.indexOf("missing") != -1);
+
+    // get some stuff
+
+    let criteria = {"name" : "Post name 3"}
+    let data = await fetch(url + "find?criteria=" + JSON.stringify(criteria)).then((x) => x.text()); 
+    data = JSON.parse(data);
+    let id_ = data[0]["_id"]; 
+    assert(id_ !== undefined);
+    // get all 
+    data = undefined;
+
+    
+    let data2 = await fetch(url + "find").then((x) => x.text()); 
+    data2=  JSON.parse(data2);
+    assert(Array.isArray(data2) && data2.length == 10);
+    
+    // get by id 
+    let data3 = await fetch(url + "findById?id=" + id_).then((x) => x.text()); 
+    data3 = JSON.parse(data3);
+    assert(data3[0]["user"] == "Post user3");
+    id_ = undefined; 
+
+    // update
+
+    let criteria2 = {"name" : "Post name 4"}
+    let data4 = await fetch(url + "find?criteria=" + JSON.stringify(criteria2)).then((x) => x.text()); 
+    data4 = JSON.parse(data4);
+    let id2_ = data4[0]["_id"]; 
+    let updateData = {"id" : id2_, "data":{"content":"this is updated"}}; 
+    await fetch(url + "update", {"method":"POST", "headers":{"Content-Type":"application/json"} , "body": JSON.stringify(updateData)}).then((x) => x.text()); 
+    
+    let data5 = await fetch(url + "find?criteria=" + JSON.stringify({"name":"Post name 4"})).then((x) => x.text()); 
+    data5 = JSON.parse(data5);
+    assert(data5[0]["content"] == "this is updated");
+
+    // delete 
+
+    let criteria6 = {"name" : "Post name 6"}
+    let data6 = await fetch(url + "find?criteria=" + JSON.stringify(criteria6)).then((x) => x.text()); 
+    data6 = JSON.parse(data6);
+    let id6_ = data6[0]["_id"]; 
+    assert(id6_ !== undefined);
+    await fetch(url + "delete", {"method":"POST", "headers":{"Content-Type":"application/json"} , "body": JSON.stringify({"id":id6_})}).then((x) => x.text()); 
+
+    let data7 = await fetch(url + "find?criteria=" + JSON.stringify(criteria6)).then((x) => x.text()); 
+    data7 = JSON.parse(data7);
+    assert(data7.length == 0);
+    document.write("All passed");
+}
+
+
+run(); 
+
+    
+    </script>
+</html>

@@ -1,0 +1,10 @@
+
+
+<h2>Event Binding</h2> 
+<button (click)="showData($event)">Click here</button>
+<table class="tablethingy">
+<ng-container *ngFor="let item of this.title">
+<tr><td>{{item}}</td><td>{{item.length}}</td></tr>
+</ng-container>
+
+</table>
