@@ -1,0 +1,41 @@
+<div *ngFor="let item of stuff">
+    <ng-container *ngTemplateOutlet="thing ; context:{d : item}"></ng-container>
+<br />
+</div>
+Sender : 
+<div id="sender">
+    <div *ngFor="let item of personstuff">
+        <ng-container *ngTemplateOutlet="thing ; context:{d : item}"></ng-container>
+    <br />
+</div>
+
+<br />
+
+Recipient:
+<div id="recipient">
+    <div *ngFor="let item of personstuff">
+        <ng-container *ngTemplateOutlet="thing ; context:{d : item}"></ng-container>
+    <br />
+</div>
+
+<button (click)="add_()"> Add</button>
+<a href="exp">Back</a>
+
+<ng-template #thing let-item="d">
+
+    {{item[1]}}
+<ng-container *ngIf="item[2] == 's'">
+    <input type="text" id="{{item[0]}}" />
+</ng-container>
+<ng-container *ngIf="item[2] == 'd'">
+    <input type="Date" id="{{item[0]}}" /> 
+</ng-container>
+<ng-container *ngIf="item[2] == 'e'">
+    <div id="{{item[0]}}">
+<ng-container *ngFor="let item2 of item[3]">
+    <input type="radio" name="{{item[1]}}" value="{{item2}}" id="{{item2}}" /> {{ item2}}
+</ng-container>
+    
+    </div></ng-container>
+
+</ng-template>

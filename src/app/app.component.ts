@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule,Location } from '@angular/common';
 import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
  
 
@@ -11,8 +11,15 @@ import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'expense-manager';
   name = "David"; 
-  hello=false;
+  display=true;
+  
+  constructor(private location: Location){}
+  ngOnInit(){
+    console.log(this.location.path() );
+    this.display =  this.location.path() == "";
+  }
+
 }

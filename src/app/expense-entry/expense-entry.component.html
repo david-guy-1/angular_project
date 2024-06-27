@@ -1,10 +1,41 @@
 
 
-<h2>Event Binding</h2> 
-<button (click)="showData($event)">Click here</button>
-<table class="tablethingy">
-<ng-container *ngFor="let item of this.title">
-<tr><td>{{item}}</td><td>{{item.length}}</td></tr>
+<h2>Look at all of your data here!!!</h2> 
+
+<button (click)="click($event)">Click here</button><br />
+
+<ng-container *ngFor="let item of this.allShows">
+    <input type="checkbox" checked (click)="toggleShow($event, item )"/> {{item}}
 </ng-container>
 
+<br />
+<input type="date" value="1900-06-01" class="dateselect"/> <input type="date" value="2100-06-01"  class="dateselect"/> <br />
+<table class="tablethingy">
+
+    <tr>
+        <td>id</td>
+        <td>sender </td>
+        <td>recipient</td>
+        <td>data</td>
+        <td>status</td>
+        <td>comments</td>
+    </tr>
+<ng-container *ngFor="let item of this.title">
+<tr *ngIf="showThese.has(item.status)">
+    <td>{{item.id}}</td>
+    <td>{{item.sender}}</td>
+    <td>{{item.recipient}}</td>
+    <td>{{item.Date}}</td>
+    <td>{{item.status}}</td>
+    <td>{{item.comments}}</td>
+    
+    <td><a href="data?id={{item.uid}}">More info</a></td>
+</tr>
+</ng-container>
 </table>
+
+<ng-container *ngIf="!loaded">
+If you don't see anything here, then you should click the "load data" button to load some data, and also check the checkboxes so they're all shown (or your database is empty and you should add some stuff in there).
+</ng-container>
+
+<a href="add">Add some stuff</a>

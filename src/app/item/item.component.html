@@ -1,0 +1,41 @@
+<ng-container *ngIf="item != undefined">
+ID : {{item.id}} <br />
+Date : {{item.date}} <br />
+Sender : <br />
+
+<ul>
+    <li> First name : {{item.sender.firstName}}</li>
+    <li> Last Name : {{item.sender.lastName}}</li>
+    <li> DOB : {{item.sender.dateOfBirth}}</li>
+    <li> ID Number  : {{item.sender.IDNumber}}</li>
+</ul>
+
+<br /> 
+
+Recipient : <br />
+
+<ul>
+    <li> First name : {{item.recipient.firstName}}</li>
+    <li> Last Name : {{item.recipient.lastName}}</li>
+    <li> DOB : {{item.recipient.dateOfBirth}}</li>
+    <li> ID Number  : {{item.recipient.IDNumber}}</li>
+</ul>
+
+<br /> 
+
+Amount : {{item.Amount}} <br />
+
+Currency : {{item.CurrencyCd}} <br />
+
+Comments : {{item.Comments}} <br />
+
+Status : {{item.status}} <br />
+
+<a href="exp">Back</a>
+
+</ng-container>
+<ng-container *ngIf="item == undefined">
+    There's NOTHING HERE!!!
+    <a href="exp">Back</a>
+
+</ng-container>
