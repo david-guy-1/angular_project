@@ -1,3 +1,5 @@
+<ng-container *ngIf="error.length > 0"><div class="errorClass">Error: {{error}}</div></ng-container>
+
 <div *ngFor="let item of stuff">
     <ng-container *ngTemplateOutlet="thing ; context:{d : item}"></ng-container>
 <br />

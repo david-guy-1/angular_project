@@ -14,7 +14,7 @@ export class AddStuffComponent  {
   stuff:  any = [["id", "id", "s"] , ["date", "Date", "d"] , ["amount", "Amount", "s"], ["currency", "Currency", "s"] , ["Comments", "Comments", "s"], ["status", "Status", "e", ["IN PROGRESS", "REJECTED", "PENDING", "COMPLETED"]]]
   personstuff : string[][] = [["firstName", "First Name", "s"], ["lastName","Last Name", "s"], ["dateOfBirth", "Date of Birth", "d"], ["email", "Email", "s"],["IDNumber", "ID Number", "s"], ["bank", "Bank", "s"] 
   ]
-  dataList = [1,2,3,4,5,6,7,8,9,10];
+  error = ""
   click($event: any){
     console.log($event);
   }
@@ -49,7 +49,24 @@ export class AddStuffComponent  {
       obj["recipient"][item[0]] = this.extract(item, document.getElementById("recipient")as HTMLElement);
     }
     obj['amount'] = parseInt(obj['amount']);
+    if(isNaN(obj["amount"])){
+      this.error = "Amount is invalid";
+      return; 
+    }
+    if(isNaN(obj["date"])){
+      this.error = "Date is invalid";
+      return; 
+    }
+
+    if(isNaN(obj["sender"]["dateOfBirth"])){
+      this.error = "Sender's birthday is invalid";
+      return; 
+    }
+    if(isNaN(obj["recipient"]["dateOfBirth"])){
+      this.error = "Recipient's birthday is invalid";
+      return; 
+    }
     console.log(obj);
-    add(obj);
+    add(obj).then(function(this :AddStuffComponent,  x : any){ if(x.error){ this.error = x.error}}.bind(this)); ;
   }
 }

@@ -9,7 +9,7 @@
 </ng-container>
 
 <br />
-<input type="date" value="1900-06-01" class="dateselect"/> <input type="date" value="2100-06-01"  class="dateselect"/> <br />
+Start <input type="date" value="1900-06-01" class="dateselect"/> End <input type="date" value="2100-06-01"  class="dateselect"/> <br />
 <table class="tablethingy">
 
     <tr>
@@ -37,5 +37,7 @@
 <ng-container *ngIf="!loaded">
 If you don't see anything here, then you should click the "load data" button to load some data, and also check the checkboxes so they're all shown (or your database is empty and you should add some stuff in there).
 </ng-container>
+
+<br />
 
 <a href="add">Add some stuff</a>
